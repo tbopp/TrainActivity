@@ -70,45 +70,71 @@ database.ref().on("child_added", function(childSnapshot) {
   
     // Store everything into a variable.
     var TrnName = childSnapshot.val().Train;
-    var empRole = childSnapshot.val().role;
-    var empStart = childSnapshot.val().start;
-    var empRate = childSnapshot.val().rate;
+    var TrnDest = childSnapshot.val().Destination;
+    var TrnFirst = childSnapshot.val().First;
+    var TrnFreq = childSnapshot.val().Frequency;
   
-    // Employee Info
-    // console.log(empName);
-    // console.log(empRole);
-    // console.log(empStart);
-    // console.log(empRate);
+    // Prettify the first train time (convert to unix seconds)
+    var TrnFirstPretty = moment.unix(TrnFirst).format("HH:mm Z")
+    console.log(TrnFirstPretty.format())
   
-    // Prettify the employee start
-    // console.log(moment.unix(empStart).format("dddd, MMMM Do YYYY, h:mm:ss a"))
-    //empStart = 04/05/1989
-    //moment.js takes the date, casts it in miliseconds 
-    //THEN 
-    //Calculates the EPOCTIME - empStart
-    console.log(empStart);
-    console.log(typeof empStart)
-    var empStartPretty = moment.unix(empStart)
-    console.log(empStartPretty.format())
+  // calcuations needed to determin next arrival time as well as how many minutes until next arrival are below:
+
+  // Assumptions
+  var tFrequency = 3;
+
+  // Time is 3:30 AM
+  var firstTime = "03:30";
+
+  // First Time (pushed back 1 year to make sure it comes before current time)
+  var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+  console.log(firstTimeConverted);
+
+  // Current Time
+  var currentTime = moment();
+  console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+  // Difference between the times
+  var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+  console.log("DIFFERENCE IN TIME: " + diffTime);
+
+  // Time apart (remainder)
+  var tRemainder = diffTime % tFrequency;
+  console.log(tRemainder);
+
+  // Minute Until Train
+  var tMinutesTillTrain = tFrequency - tRemainder;
+  console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+  // Next Train
+  var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+  console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+  
+    
   
   
   
-    // Calculate the months worked using hardcore math
+  
+  
+  // Calculate the months worked using hardcore math
     // To calculate the months worked
-    var empMonths = moment().diff(moment(empStart, "X"), "months");
+
+    // var empMonths = moment().diff(moment(empStart, "X"), "months");
+   
     // console.log(empMonths);
   
     // Calculate the total billed rate
-    var empBilled = empMonths * empRate;
-    console.log(empBilled);
+    
+    // var empBilled = empMonths * empRate;
+    // console.log(empBilled);
   
   
     // Create the new row
     var newRow = $("<tr>").append(
-      $("<td>").text(empName),
-      $("<td>").text(empRole),
-      $("<td>").text(empStartPretty),
-      $("<td>").text(empMonths),
+      $("<td>").text(TrnName),
+      $("<td>").text(TrnDest),
+      $("<td>").text(TrnFirst),
+      $("<td>").text(TrnFreq),
       $("<td>").text(empRate),
       $("<td>").text(empBilled)
     );

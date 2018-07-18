@@ -1,7 +1,4 @@
-// This logic should be based off the Timesheet activity (#17) and include structures similar to activites 18 (Push), 19 (Add_Child), and 20 (MomentJS).
-
 // Initialize Firebase
-
 var config = {
     apiKey: "AIzaSyDBP53Lrqjwlk3KnTQ2OkJqjqKcVfp3aJs",
     authDomain: "test-be813.firebaseapp.com",
@@ -22,11 +19,11 @@ var Dest = "";
 var FirstT = 0;
 var Freq = "";
 
-// 2. Button for adding trains
+// Button event for adding trains
 $("#add-train-btn").on("click", function(event) {
     event.preventDefault();
   
-    // Grabs user input from each field, assigns to a variable
+    // Grabs user input from each field, assigns value to a variable
     Tname = $("#train-name-input").val().trim();
     Dest = $("#destination-input").val().trim();
     FirstT = $("#first-train-input").val().trim();
@@ -38,7 +35,6 @@ $("#add-train-btn").on("click", function(event) {
       Destination: Dest,
       First: FirstT,
       Frequency: Freq,
-      dateAdded: firebase.database.ServerValue.TIMESTAMP
     };
   
     // Pushes (appends) train data to the database
@@ -57,8 +53,6 @@ $("#add-train-btn").on("click", function(event) {
   $("#first-train-input").val("");
   $("#frequency-input").val("");
 });
-
-
 
 // Firebase event for adding trains to the database and a row in the html table when a user adds an entry
 database.ref().on("child_added", function(Snapshot) {
@@ -95,8 +89,6 @@ database.ref().on("child_added", function(Snapshot) {
   TrnNext = moment().add(TrnMins, "minutes");
   console.log("ARRIVAL TIME: " + moment(TrnNext).format("hh:mm"));
   
-    // Append a new row to the table
-    $("#train-table > tbody").append("<tr><td>" + TrnName + "</td><td>" + TrnDest + "</td><td>" + TrnFreq + "</td><td>" + moment(TrnNext).format("hh:mm") + "</td><td>" + TrnMins + "</td></tr>");
-  
-    
-  });
+  // Append a new row to the table
+  $("#train-table > tbody").append("<tr><td>" + TrnName + "</td><td>" + TrnDest + "</td><td>" + TrnFreq + "</td><td>" + moment(TrnNext).format("hh:mm") + "</td><td>" + TrnMins + "</td></tr>");
+});

@@ -1,0 +1,44 @@
+#train-table th,
+td {
+    display: inline-block;
+    width: 20%;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(209, 240, 241);
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+#header {
+    padding-top: 30px
+}
+
+.header-image {
+    display: block;
+    height: 200px;
+    bottom: 30px;
+    margin: 0 auto;
+    border: 1px solid grey;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+.container {
+    padding-top: 0px;
+}
+
+.jumbotron {
+    background-color: rgb(209, 240, 241);
+    color: black;
+    height: 100px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 100px;
+
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
